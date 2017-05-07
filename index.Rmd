@@ -37,7 +37,7 @@ will take you to the website for the presidential homes. Note the icon for the s
                 lat=c(38.008883,38.219027, 37.982719),
                 lng=c(-78.453178, -78.168414, -78.455446))
         
-        presSites <- c("<a href='http://home.monticello.org'>Thomas Jefferson:\n Third US President</a>", "<a href='https://www.montpelier.org'>James Madison: Fourth US President</a>", "<a href='http://highland.org'>James Monroe: 5th US Presdient</a>")
+        presSites <- c("<a href='http://home.monticello.org'>Thomas Jefferson: Third US President</a>", "<a href='https://www.montpelier.org'>James Madison: Fourth US President</a>", "<a href='http://highland.org'>James Monroe: 5th US President</a>")
         
         ## This Works But Leaflet Doesn't Support in Browser
         # presLatLong %>% 
@@ -77,7 +77,8 @@ presSeal2 <- makeIcon(iconUrl = "https://upload.wikimedia.org/wikipedia/commons/
                 presLatLong %>% 
                 leaflet() %>% 
                 addProviderTiles(providers$OpenStreetMap) %>% 
-                addMarkers(~lng, ~lat, icon = presSeal2, popup = presSites)
+                addMarkers(~lng, ~lat, icon = presSeal2, popup = presSites,
+                           popupOptions(closeButton = FALSE))
 ```
 
 Your feedback is welcome. Please send comments to 
