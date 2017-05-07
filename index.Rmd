@@ -1,0 +1,84 @@
+---
+title: 'Week 2 Assignment: Leaflet Map'
+author: "Kurtis Pivert"
+date: "5/7/2017"
+output: html_document
+---
+
+```{r Xa. Load Required Packages, include=FALSE}
+        ## Load Packages
+        require(tidyverse)
+        require(knitr)
+        require(extrafont)
+        require(leaflet)
+        require(htmltools)
+        loadfonts(quiet = TRUE)
+        
+```
+
+## Presidential Residences Near Charlottesville, VA, USA
+### Developing Data Products Week 2 Project
+### Created May 7, 2017
+
+This map, created with the `leaflet` package in R, demonstrates the three
+presidential residences located near my home in [Charlottesville, VA, USA](https://en.wikipedia.org/wiki/Charlottesville,_Virginia). 
+
+Click the *Presidential Seal icons* to learn the name of the president and the link
+will take you to the website for the presidential homes. Note the icon for the southernmost home is slightly cut off in the frame. (If you know how to adjust this, please let 
+[me](mailto:kurtis.pivert@gmail.com) know.)
+
+
+```{r Xb. Create Leaflet Map, echo=FALSE}
+
+        presSeal <- makeIcon(iconUrl = "https://upload.wikimedia.org/wikipedia/commons/3/36/Seal_of_the_President_of_the_United_States.svg", iconWidth = 31*215/230, iconHeight = 31, iconAnchorX = 31*215/230*2, 
+                             iconAnchorY = 16)
+
+        presLatLong <- data.frame(
+                lat=c(38.008883,38.219027, 37.982719),
+                lng=c(-78.453178, -78.168414, -78.455446))
+        
+        presSites <- c("<a href='http://home.monticello.org'>Thomas Jefferson:\n Third US President</a>", "<a href='https://www.montpelier.org'>James Madison: Fourth US President</a>", "<a href='http://highland.org'>James Monroe: 5th US Presdient</a>")
+        
+        ## This Works But Leaflet Doesn't Support in Browser
+        # presLatLong %>% 
+        #         leaflet() %>% 
+        #         addTiles() %>%
+        #         addMarkers(icon = presSeal)
+        
+        ## This Also Works But Focues on Green Space    
+        # presLatLong %>% 
+        #         leaflet() %>% 
+        #         addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
+        #         addMarkers(icon = presSeal)
+        # 
+        
+        # This is Best 
+        # presLatLong %>% 
+        #         leaflet() %>% 
+        #         addProviderTiles(providers$OpenStreetMap) %>% 
+        #         addMarkers(icon = presSeal, popup = presSites)
+        
+        # Raw Data 
+        # Monticello 38.008883, -78.453178 http://home.monticello.org
+        # Montpelier 38.219027, -78.168414 https://www.montpelier.org
+        # Highland 37.982719, -78.455446 http://highland.org
+
+        
+```
+
+
+
+
+
+```{r Xc. Trying to fix labels, echo=FALSE}
+          ## These are the correct Dimensions for fixing the pointer problem
+presSeal2 <- makeIcon(iconUrl = "https://upload.wikimedia.org/wikipedia/commons/3/36/Seal_of_the_President_of_the_United_States.svg", iconWidth = 31*215/230, iconHeight = 31, iconAnchorX = 31*215/400, 
+                             iconAnchorY = 1)
+                presLatLong %>% 
+                leaflet() %>% 
+                addProviderTiles(providers$OpenStreetMap) %>% 
+                addMarkers(~lng, ~lat, icon = presSeal2, popup = presSites)
+```
+
+Your feedback is welcome. Please send comments to 
+[kurtis.pivert@gmail.com](mailto:kurtis.pivert@gmail.com).
